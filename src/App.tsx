@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import PageLayout from "./pages/PageLayout";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import RecoilDemoParent from "./components/RecoilDemo/RecoilDemoParent";
+import TenantForm from "./components/Dashboard/Tenants/TenantForm";
+import Tenants from "./components/Dashboard/Tenants/Tenants";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<PageLayout />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route path="/dashboard/tenants" element={<Tenants />} />
+                <Route path="/dashboard/tenant/new" element={<TenantForm />} />
+              </Route>
+            </Route>
+            <Route path="/recoildemo" element={<RecoilDemoParent />} />
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
     </div>
   );
 }
