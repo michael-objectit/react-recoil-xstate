@@ -5,18 +5,17 @@ import { login, logout } from "../../api/auth";
 import useLocalStorage from "../useLocalStorage/useLocalStorage";
 import authMachine from "../../state-machines/auth.machine";
 
-export function useAuthMachine() {
+function useAuthMachine() {
   const navigateTo = useNavigate();
   const [authSession, persistAuthSession, resetAuthSession] =
     useLocalStorage("auth.session");
 
-  const authService = useInterpret(authMachine, {
+  return useInterpret(authMachine, {
     services: {
       login:
         (_, { email }) =>
-        async () => {
-          return await login(email);
-        },
+        async () =>
+          await login(email),
       logout,
     },
     actions: {
@@ -34,11 +33,9 @@ export function useAuthMachine() {
       },
     },
     guards: {
-      hasValidToken: () => !!authSession?.id
+      hasValidToken: () => !!authSession?.id,
     },
   });
-
-  return authService;
 }
 
 type MachineService = ReturnType<typeof useInterpret>;

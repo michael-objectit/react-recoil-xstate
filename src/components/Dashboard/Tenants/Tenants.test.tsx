@@ -1,5 +1,4 @@
-/* eslint-disable testing-library/render-result-naming-convention */
-
+/* eslint-disable jest/valid-title */
 import { screen, render } from "@testing-library/react";
 import { assign, createMachine } from "xstate";
 import { createModel } from "@xstate/test";

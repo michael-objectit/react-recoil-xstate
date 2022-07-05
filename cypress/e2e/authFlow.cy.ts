@@ -41,11 +41,11 @@ describe("Auth flow", () => {
       LOG_IN: () => {
         cy.get("input").type("tenants@example.org");
         cy.contains("Login").click();
-        cy.contains("Status: logged_in");
+        cy.contains("AuthMachine state: logged_in");
       },
       LOG_OUT: async () => {
         cy.contains("Logout").click();
-        cy.contains("Status: logged_out");
+        cy.contains("AuthMachine state: logged_out");
       },
     });
 
@@ -55,7 +55,7 @@ describe("Auth flow", () => {
       describe(plan.description, () => {
         plan.paths.forEach((path, i) => {
           it(path.description, () => {
-            return cy.visit("http://localhost:3000/").then(() => {
+            return cy.visit("/").then(() => {
               return path.test(cy);
             });
           });
@@ -82,11 +82,11 @@ describe("Auth flow", () => {
       LOG_IN: () => {
         cy.get("input").type("tenants@example.org");
         cy.contains("Login").click();
-        cy.contains("Status: logged_in");
+        cy.contains("AuthMachine state: logged_in");
       },
       LOG_OUT: async () => {
         cy.contains("Logout").click();
-        cy.contains("Status: logged_out");
+        cy.contains("AuthMachine state: logged_out");
       },
     });
 
@@ -96,7 +96,7 @@ describe("Auth flow", () => {
       describe(plan.description, () => {
         plan.paths.forEach((path, i) => {
           it(path.description, () => {
-            return cy.visit("http://localhost:3000/").then(() => {
+            return cy.visit("/").then(() => {
               localStorage.setItem("auth.session", JSON.stringify({ id: 1}))
               return path.test(cy);
             });
